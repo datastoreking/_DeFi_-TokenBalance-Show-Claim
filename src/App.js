@@ -7,7 +7,7 @@ function App() {
       <div>
         <div className='address-balance'>
           <select className='address'>
-            <option>1</option>
+            <option>address-1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
@@ -16,9 +16,10 @@ function App() {
           <div className='balance'>balance: <span>100</span></div>
         </div>
         <div className='claim-connect'>
+          <input type="text" className="amount"/>
           <button className='btn-claim-enable'>claim</button>
-          <button className='btn-connectwallet'>connect metamask</button>
         </div>
+        <button className='btn-connectwallet'>connect metamask</button>
       </div>
     </div>
   );
