@@ -38,6 +38,13 @@
   padding: 0.5rem 1rem;
   border:none;
   cursor:pointer;
+  background-color: rgb(124, 236, 129);
+}
+
+.btn-claim-disabled{
+  padding: 0.5rem 1rem;
+  border:none;
+  cursor:pointer;
   background-color: rgb(157, 179, 158);
 }
 
