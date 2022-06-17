@@ -3,7 +3,6 @@
 ### `npm install`
 ### `npm start`
 
-This project was bootstrapped with [my repo](https://github.com/socr102/TokenBalance-Show.git).
 
 In this repository there are 2 branches
 Main: Frontend, Smart contract integration available see the whole DApp working
