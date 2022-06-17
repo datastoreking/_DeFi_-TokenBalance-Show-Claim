@@ -1,18 +1,34 @@
 const hre = require("hardhat");
-const { ethers } = require("hardhat");
+const fs = require('fs');
+const readline = require('readline');
 
 async function main() {
-  const TokenBalance = await hre.ethers.getContractFactory("TokenBalance");
-  const tokenbalance = await TokenBalance.deploy();
+  // We get the contract to deploy
+  const fileStream = fs.createReadStream('Address_Balance.txt');
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+  const addresses = [];
+  const amounts = [];
+  for await (const line of rl) {
+    const address_balace = line.split(",");
+    addresses.push(address_balace[0]);
+    amounts.push(parseInt(address_balace[1]));
+  }
+  
+  const testToken = await hre.ethers.getContractFactory("TestToken");
+  const testContract = await testToken.deploy(addresses[0], addresses[1], addresses[2], addresses[3], addresses[4], amounts[0], amounts[1], amounts[2], amounts[3], amounts[4]);
 
-  await tokenbalance.deployed();  
-  const currentBalance = await tokenbalance.checkBalance(0x34A7350f5C5F08f9444CbBef1624275E66cCFFBf);
+  await testContract.deployed();
 
-  console.log("Contract has been deployed to:", tokenbalance.address);
-  console.log('Current balance in contract is: ', currentBalance.toString());
+  console.log("Test contract deployed to:", testContract.address);
 
+  
 }
 
+// We recommend this pattern to be able to use async/await everywhere
+// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
