@@ -7,8 +7,10 @@
   text-align: center;
 }
 
-.claim-connect{
-  margin-top: 10px;
+.claimPart{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-claim-enable{
@@ -35,4 +37,11 @@
 
 .contractBalance{
   font-weight: 900;
+}
+
+.claimAmount{
+  width: 150px;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgb(21, 184, 84);
+  margin-right: 20px;
 }

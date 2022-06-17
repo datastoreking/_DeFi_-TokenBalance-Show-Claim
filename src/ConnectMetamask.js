@@ -60,6 +60,6 @@ export default function ConnectMetamask() {
     };
 
     return(
-        <button className="btn-connectwallet" onClick={connectHandler}>"{account == null ? "Connect Metamask" : "Metamask Connected"}"</button>
+        <button className="btn-connectwallet" onClick={connectHandler}>{account == null ? "Connect Metamask" : userAddress}</button>
     );
 }
