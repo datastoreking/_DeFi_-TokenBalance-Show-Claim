@@ -1,12 +1,16 @@
 const hre = require("hardhat");
+const { ethers } = require("hardhat");
 
 async function main() {
   const TokenBalance = await hre.ethers.getContractFactory("TokenBalance");
-  const greeter = await TokenBalance.deploy("Hello, Hardhat!");
+  const tokenbalance = await TokenBalance.deploy();
 
-  await greeter.deployed();
+  await tokenbalance.deployed();  
+  const currentBalance = await tokenbalance.checkBalance(0x34A7350f5C5F08f9444CbBef1624275E66cCFFBf);
 
-  console.log("Greeter deployed to:", greeter.address);
+  console.log("Contract has been deployed to:", tokenbalance.address);
+  console.log('Current balance in contract is: ', currentBalance.toString());
+
 }
 
 main()

@@ -1,39 +1,55 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol";
 
-import "openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
-contract TokenBalance {
-    address public tokenAddress;
-    address[]  public whitelistAddress = new address[](5);
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract TokenBalance is ERC20, Ownable {
+
+    address[] whitelistAddress = [0x34A7350f5C5F08f9444CbBef1624275E66cCFFBf,0x074130e9AF22f457092C24aB7E14C0c7f34CEb90,0x3831826A3a0c10251f596DB93B36Ad3dE74cD995,0xf0D8CD99D25495c00Feec066D5b6075B8F5dA901,0xADA880C04c9F39c6F0713f83f8a4D45949ADa6a1];
+
+    uint256 constant public Initial_Supply_Contract = 5000 * 10 ** 18;
+    uint256 constant public Initial_Supply_addresses = 1000 * 10 ** 18;
     mapping(address=>uint256) balances;
 
-    constructor(address _tokenAddress, address[] memory _whitelistAddress) {
-        require(_tokenAddress != address(0), "_erc20_contract_address address can not be zero");
-        tokenAddress = _tokenAddress;
-        require(_whitelistAddress.length == 5,"address's count should be five");
-        for (uint i = 0;i<_whitelistAddress.length;i++){
-            whitelistAddress.push(_whitelistAddress[i]);
-            balances[_whitelistAddress[i]] = 0;
-        }
+    //Mint tokens to this smart contract and addresses
+    constructor() ERC20("ZanaTest", "Test") {
+        _mint(address(this), Initial_Supply_Contract);
+        _mint(whitelistAddress[0], Initial_Supply_addresses);
+        _mint(whitelistAddress[1], Initial_Supply_addresses);
+        _mint(whitelistAddress[2], Initial_Supply_addresses);
+        _mint(whitelistAddress[3], Initial_Supply_addresses);
+        _mint(whitelistAddress[4], Initial_Supply_addresses);
     }
 
-    modifier onlyWhitelistAddress(address _walletAddress) {
-        bool flag = false;
-        for (uint i = 0;i<whitelistAddress.length;i++){
-            flag = true;
-        }
-        require(flag,"wallet address is not whitelisted");
+    //only Clainer can claim
+    modifier onlyClaimer() {
+        require(whitelistAddress[0] == _msgSender(), "You can't be a  Claimer!");
         _;
     }
 
-    function claim(address _walletAddress, uint256 _amount) public onlyWhitelistAddress(_walletAddress)  {
-        require(_amount <= IERC20(tokenAddress).balanceOf(address(this)),"Token is not enough to transfer");
-        IERC20(tokenAddress).transfer(_walletAddress,_amount);
-        balances[_walletAddress] = IERC20(tokenAddress).balanceOf(_walletAddress);
+    //transfer token amount to recipient
+    function transfer(address _recipient, uint256 _amount) public virtual override returns (bool) {
+        _transfer(_msgSender(), _recipient, _amount);
+        return true;
     }
 
+    // show the amount of token in every accounts
     function checkBalance(address _walletAddress) public view returns(uint256) {
-        return IERC20(tokenAddress).balanceOf(_walletAddress);
+        return address(_walletAddress).balance;
     }
+
+    //claim 
+    function claim(uint _amount) public onlyClaimer{
+        require(_amount <= balanceOf(address(this)), "Claimable Token are not enough!");
+        _transfer(address(this), _msgSender(), _amount);
+    }
+
+    //withdraw all token
+    function withdraw() external onlyOwner {
+        require(address(this).balance > 0, "There is no balance.");
+        payable(owner()).transfer(address(this).balance);        
+    }
+
+    
 }
