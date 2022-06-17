@@ -3,23 +3,23 @@ import { ethers } from "ethers";
 import './ConnectMetamask'
 import './App.css';
 import Input from './Address_Balance.txt';
-import ConnectMetamask from "./ConnectMetamask";
-
-  // make the array of all claimable addresses
-  const claimableAddress_Array = [];
-  fetch(Input)
-  .then((r) => r.text())
-  .then(text  => {
-    const lines = text.split("\n");
-    for(var line = 0; line < lines.length; line ++){
-      if(lines[line]){
-        const claimableAddress = lines[line].slice(0,42);
-        claimableAddress_Array.push(claimableAddress);
-      }
-    }
-  })
 
  const App = () => {
+
+  const [claimableAddress_Array, setclaimableAddress_Array] = useState([])
+  useEffect(()=>{
+    fetch(Input)
+      .then((r) => r.text())
+      .then(text  => {
+        const lines = text.split("\n");
+        for(var line = 0; line < lines.length; line ++){
+          if(lines[line]){
+            const claimableAddress = lines[line].slice(0,42);
+            setclaimableAddress_Array(element => [claimableAddress, ...element])
+          }
+        }
+    })
+  },[])
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [account, setAccount] = useState(null);
@@ -82,11 +82,11 @@ import ConnectMetamask from "./ConnectMetamask";
       <button className="btn-connectwallet" onClick={connectHandler}>{account == null ? "Connect Metamask" : userAddress}</button>
       <div className="claimableAddress">
         <h1>Claimable Addresses and their balances:</h1>
-        <p>0xa66AefA24488db264e9Bf3589bBDa0b64d4aee86: <span> 1000</span></p>
-        <p>0x98D9EebEF8Ab2F1f7b455519Ff7FFE72d9ea9Bb3 <span> 1000</span></p>
-        <p>0x1663bDC4f4B6e5C3B5feF05123d546CfD84D918b <span> 1000</span></p>
-        <p>0x3095791B68e101d13e53F942a5d974E0b2629f7B <span> 1000</span></p>
-        <p>0x474A850f26177F60280eB1d8E5a6aA7f03e20961 <span> 1000</span></p>
+        <p>{claimableAddress_Array[0]}: <span> 1000</span></p>
+        <p>{claimableAddress_Array[1]}: <span> 1000</span></p>
+        <p>{claimableAddress_Array[2]}: <span> 1000</span></p>
+        <p>{claimableAddress_Array[3]}: <span> 1000</span></p>
+        <p>{claimableAddress_Array[4]}: <span> 1000</span></p>
         <h1>Current Smart Contract Balance:</h1>
         <p className="contractBalance">10000</p>
       </div>
