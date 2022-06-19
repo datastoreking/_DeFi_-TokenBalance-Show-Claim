@@ -37,7 +37,6 @@ module.exports = {
     },
     rinkeby: {
       url: "https://eth-rinkeby.alchemyapi.io/v2/NXqkxxyuNympXDCFSBP8v9TTSyualSUk",
-      // url: `https://rinkeby.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
       accounts: [process.env.ACCOUNT_0_PRIVATE_KEY]
     },
     ropsten: {

@@ -2,7 +2,7 @@ const console = require('console')
 const hre = require('hardhat')
 const fs = require('fs');
 const readline = require('readline');
-// Define the NFT
+
 async function main() {
   const fileStream = fs.createReadStream('Address_Balance.txt');
   const rl = readline.createInterface({
@@ -16,7 +16,7 @@ async function main() {
     addresses.push(address_balace[0]);
     amounts.push(parseInt(address_balace[1]));
   }
-  
+  // We can use other contract addresses to verify others
   await hre.run('verify:verify', {
     address: '0xDBC99496c826540419d08753695A885039FC6776',
     constructorArguments: [
