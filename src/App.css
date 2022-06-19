@@ -1,0 +1,47 @@
+.App{
+  margin-top: 100px;
+  text-align: center;
+}
+
+.claimableAddress{
+  text-align: center;
+}
+
+.claimPart{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-claim-enable{
+  padding: 0.5rem 1rem;
+  border:none;
+  cursor:pointer;
+  background-color: rgb(41, 138, 46);
+}
+
+.btn-claim-disabled{
+  padding: 0.5rem 1rem;
+  border:none;
+  cursor:pointer;
+  background-color: rgb(160, 160, 160);
+}
+
+.btn-connectwallet{
+  cursor:pointer;
+  padding: 0.5rem 1rem;
+  border:none;
+  background-color: rgb(92, 45, 221);
+  color: white;
+}
+
+.contractBalance{
+  font-weight: 900;
+}
+
+.claimAmount{
+  width: 150px;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgb(21, 184, 84);
+  margin-right: 20px;
+}

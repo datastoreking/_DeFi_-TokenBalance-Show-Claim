@@ -37,7 +37,7 @@ const App = () => {
   },[])
 
   useEffect(()=>{
-    if(claimableAddress_Array.length !=0){
+    if(claimableAddress_Array.length !==0){
       loadContractBalance();
       loadUserBalance();
     }
