@@ -15,8 +15,10 @@ const App = () => {
   const [walletAddress, setWalletAddress] = useState();
   const [amount, setAmount] = useState(0);
   const [accountSigner, setSigner] = useState();
+
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
+  console.log(signer)
   const testContract = new ethers.Contract(contractAddress, contractABI, signer);
 
   // read the Address_Balance text file 
@@ -34,7 +36,6 @@ const App = () => {
     })
   },[])
 
-  
   useEffect(()=>{
     if(claimableAddress_Array.length !=0){
       loadContractBalance();
