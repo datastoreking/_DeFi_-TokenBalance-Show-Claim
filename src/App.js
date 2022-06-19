@@ -4,9 +4,10 @@ import './App.css';
 import Input from './Address_Balance.txt';
 
 const contractABI = require("./contract-abi.json");
+//This smart contract has been deployed using hardhat in hardhat branch
 const contractAddress = "0xDBC99496c826540419d08753695A885039FC6776";
 
- const App = () => {
+const App = () => {
 
   const[accountBal, setaccountBal] = useState([]);
   const[contractBal, setcontractBal] = useState();
@@ -18,6 +19,7 @@ const contractAddress = "0xDBC99496c826540419d08753695A885039FC6776";
   const signer = provider.getSigner();
   const testContract = new ethers.Contract(contractAddress, contractABI, signer);
 
+  // read the Address_Balance text file 
   useEffect(()=>{
     fetch(Input)
       .then((r) => r.text())
@@ -32,13 +34,12 @@ const contractAddress = "0xDBC99496c826540419d08753695A885039FC6776";
     })
   },[])
 
+  
   useEffect(()=>{
-
     if(claimableAddress_Array.length !=0){
       loadContractBalance();
       loadUserBalance();
     }
-
   });
 
   const loadContractBalance = async () => {
